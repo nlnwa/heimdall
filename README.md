@@ -1,2 +1,4 @@
-# go_container
-Template for creating a Go application in a Docker container
+# Heimdall
+
+Policy decision point (PDP) for web playback. 
+

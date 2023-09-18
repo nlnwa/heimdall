@@ -1,0 +1,34 @@
+## Example policy format, keys and possible values(YAML)
+#
+#- name: "name of role"
+#  defaultPolicy: "allow|deny
+#  rules:
+#    - url: "a pattern to match a set of urls"
+#      description:" description of the rule"
+#      policy:"allow|deny
+
+- name: "default"
+  defaultPolicy: "deny"
+  rules:
+    - url: "*nb.no/"
+      policy: "allow"
+      description: "Allow all requests to nb.no/"
+
+    - url: "*nb.no/paywall*"
+      policy: "deny"
+      description: "contains paid content, only available for certain users"
+
+    - url: "*nb.no/confidential*"
+      policy: "deny"
+      description: "Info NNA-3225"
+
+- name: "curator"
+  defaultPolicy: "allow"
+  rules:
+    - url: "*nb.no/confidential*"
+      policy: "deny"
+      description: "Info NNA-3225"
+
+- name: "admin"
+  defaultPolicy: "allow"
+  rules: []
