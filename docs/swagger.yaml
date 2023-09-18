@@ -1,0 +1,54 @@
+definitions:
+  pdp.AccessRequest:
+    description: Requests access to a url for a user with a certain role given by
+      token
+    properties:
+      token:
+        type: string
+      url:
+        type: string
+    type: object
+  pdp.AccessResponse:
+    properties:
+      permission:
+        $ref: '#/definitions/pdp.Permission'
+    type: object
+  pdp.Permission:
+    enum:
+    - allow
+    - deny
+    type: string
+    x-enum-varnames:
+    - Allow
+    - Deny
+info:
+  contact: {}
+  description: This is the Heimdall API documentation.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Heimdall API
+  version: 0.1.0-alpha
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: Check if user with a certain role has access to an url
+      operationId: access-handler
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pdp.AccessRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pdp.AccessResponse'
+      summary: Check if user with a certain role has access to an url
+swagger: "2.0"
