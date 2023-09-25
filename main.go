@@ -1,18 +1,29 @@
 package main
 
 import (
-	"net/http"
-	"os"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	_ "github.com/nlnwa/heimdall/docs"
+	"github.com/nlnwa/heimdall/handlers"
+	echoSwagger "github.com/swaggo/echo-swagger"
+	"net/http"
+	"os"
 )
+
+// @title Heimdall API
+// @version 0.1.0-alpha
+// @description This is the Heimdall API documentation.
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 func main() {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.HTML(http.StatusOK, "Hello from server")
@@ -21,6 +32,8 @@ func main() {
 	e.GET("/health", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, struct{ Status string }{Status: "OK"})
 	})
+
+	e.POST("/auth", handlers.AccessHandler)
 
 	httpPort := os.Getenv("PORT")
 	if httpPort == "" {

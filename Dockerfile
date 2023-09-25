@@ -9,14 +9,17 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /ping-server
+RUN go install github.com/swaggo/swag/cmd/swag@latest \
+        && swag init -g main.go
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /heimdall
 
 FROM golang:1.20 AS run-stage
 
 WORKDIR /run
 
-COPY --from=build-stage /ping-server .
+COPY --from=build-stage /heimdall .
 
 EXPOSE 8080
 
-CMD ["/run/ping-server"]
+CMD ["/run/heimdall"]
