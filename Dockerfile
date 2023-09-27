@@ -9,12 +9,10 @@ RUN go mod download
 
 COPY . .
 
-RUN go generate
-
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /heimdall
 
 
-FROM gcr.io/distroless/static-debian12:debug AS run-stage
+FROM gcr.io/distroless/static-debian12:nonroot AS run-stage
 
 WORKDIR /run
 
