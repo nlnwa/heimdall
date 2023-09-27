@@ -27,6 +27,7 @@ func TestCanAccess(t *testing.T) {
 		{AccessRequest{Url: "http://nb.no/confidential", Token: "1"}, AccessResponse{Permission: Allow}}, // admin policy should allow access
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(fmt.Sprint(tt.req), func(t *testing.T) {
 			t.Parallel()
 
