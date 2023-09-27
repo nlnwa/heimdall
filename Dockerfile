@@ -9,12 +9,12 @@ RUN go mod download
 
 COPY . .
 
-RUN go install github.com/swaggo/swag/cmd/swag@latest \
-        && swag init -g main.go
+RUN go generate
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /heimdall
 
-FROM golang:1.20 AS run-stage
+
+FROM gcr.io/distroless/static-debian12:debug AS run-stage
 
 WORKDIR /run
 
@@ -22,4 +22,4 @@ COPY --from=build-stage /heimdall .
 
 EXPOSE 8080
 
-CMD ["/run/heimdall"]
+ENTRYPOINT ["/run/heimdall"]
