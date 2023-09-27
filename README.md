@@ -7,9 +7,9 @@ Policy decision point (PDP) for web playback.
 ### Getting started 
 
 Start application with an example policy file:
-```bash:
-$ go build 
-$ go run . -policy testdata/policy_example.yaml
+```shell:
+go build 
+go run . -policy testdata/policy_example.yaml
 ```
 
 
@@ -21,7 +21,7 @@ With the application running, open browser to http://localhost:8080/swagger/inde
 Update the documentation by commenting using the [Declarative Comments Format](https://github.com/swaggo/swag#declarative-comments-format)
 and generate the documentation using 
 
-```bash:
-$ go generate 
+```shell:
+go generate 
 ```
 
