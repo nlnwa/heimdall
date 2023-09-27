@@ -2,22 +2,26 @@
 
 Policy decision point (PDP) for web playback. 
 
-### Generate Swagger API documentation
+/auth endpoint takes an AccessRequest and grants or denies access by checking a list of policies.
 
-Some of the code is commented with the [Declarative Comments Format](https://github.com/swaggo/swag#declarative-comments-format).
-Which generates the swagger documentation.
+### Getting started 
 
-1. Download [Swag](https://github.com/swaggo/swag) for go by using:
+Start application with an example policy file:
 ```bash:
-$ go get -d github.com/swaggo/swag/cmd/swag
-
-# 1.16 or newer
-$ go install github.com/swaggo/swag/cmd/swag@latest 
+$ go build 
+$ go run . -policy testdata/policy_example.yaml
 ```
 
-2. Run the Swag in your Go project root folder which contains main.go file, Swag will parse comments and generate required files(docs folder and docs/doc.go).
-```bash
-swag init
+
+
+### Swagger API documentation
+
+With the application running, open browser to http://localhost:8080/swagger/index.html, to see the generated documentation.
+
+Update the documentation by commenting using the [Declarative Comments Format](https://github.com/swaggo/swag#declarative-comments-format)
+and generate the documentation using 
+
+```bash:
+$ go generate 
 ```
 
-3. Run application, and open browser to http://localhost:8080/swagger/index.html, to see the documentation.
