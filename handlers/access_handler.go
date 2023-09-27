@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/nlnwa/heimdall/pdp"
-	"log"
 	"net/http"
 )
 
@@ -23,7 +23,7 @@ func AccessHandler(c echo.Context) error {
 
 	err := json.NewDecoder(c.Request().Body).Decode(&accRec)
 	if err != nil {
-		log.Fatalf("Failed reading the request body %s", err)
+		return fmt.Errorf("failed reading the request body %s", err)
 	}
 
 	accRes := pdp.CanAccess(accRec)
