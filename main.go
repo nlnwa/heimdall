@@ -20,7 +20,6 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-//go:generate go run github.com/swaggo/swag/cmd/swag init
 func main() {
 
 	policyFile := flag.String("policy", "", "Path to policy file")

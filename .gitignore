@@ -23,5 +23,9 @@ go.work
 # Editor
 .idea/
 
+# Generated swagger docs
+docs/*
+!docs/package.go
+
 # Binary
 heimdall
