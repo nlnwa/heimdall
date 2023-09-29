@@ -1,10 +1,13 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/nlnwa/heimdall/docs"
 	"github.com/nlnwa/heimdall/handlers"
+	"github.com/nlnwa/heimdall/pdp"
 	echoSwagger "github.com/swaggo/echo-swagger"
 	"net/http"
 	"os"
@@ -18,6 +21,21 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 func main() {
+
+	policyFile := flag.String("policy", "", "Path to policy file")
+	flag.Parse()
+
+	if *policyFile == "" {
+		fmt.Println("Missing required flag -policy")
+		os.Exit(1)
+	}
+
+	err := pdp.SetPolicies(*policyFile)
+	if err != nil {
+		fmt.Printf("Failed to initialize pdp: %v\n", err)
+		os.Exit(1)
+	}
+
 	e := echo.New()
 
 	e.Use(middleware.Logger())

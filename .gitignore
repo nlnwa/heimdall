@@ -17,11 +17,15 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# Generated swagger documentation
-docs/
-
 # Go workspace file
 go.work
 
 # Editor
 .idea/
+
+# Generated swagger docs
+docs/*
+!docs/package.go
+
+# Binary
+heimdall

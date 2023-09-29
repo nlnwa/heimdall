@@ -1,30 +1,25 @@
 package pdp
 
 import (
-	"embed"
 	"fmt"
 	"github.com/gobwas/glob"
 	"github.com/nlnwa/whatwg-url/canonicalizer"
 	"gopkg.in/yaml.v3"
+	"os"
 )
 
-//go:embed policy/policy_example.yaml
-var policies embed.FS
+var policies []AccessPolicy
 
 /*
 CanAccess takes an AccessRequest and returns an AccessResponse.
 The AccessResponse contains the permission to access the url.
-A list of policies is loaded from the policy directory.
 The url get evaluated against the policies, before a response is returned.
 */
 func CanAccess(accRec AccessRequest) AccessResponse {
-
-	policies := GetPolicies()
-
 	for _, p := range policies {
-		if p.Name == GetRoleFromToken(accRec.Token) {
+		if p.Name == getRoleFromToken(accRec.Token) {
 			for _, r := range p.Rules {
-				if EvaluateUrl(r.Url, accRec.Url) {
+				if evaluateUrl(r.Url, accRec.Url) {
 					switch r.Policy {
 					case "allow":
 						return AccessResponse{Permission: Allow}
@@ -47,28 +42,26 @@ func CanAccess(accRec AccessRequest) AccessResponse {
 }
 
 /*
-GetPolicies loads a list of policies from the policy directory and return an array of AccessPolicy.
+SetPolicies loads a list of policies from a yaml file.
 */
-func GetPolicies() []AccessPolicy {
-	f, err := policies.ReadFile("policy/policy_example.yaml")
+func SetPolicies(policyFile string) error {
+	f, err := os.ReadFile(policyFile)
 	if err != nil {
-		fmt.Println("error reading file", err)
-		return nil
+		return fmt.Errorf("error reading file: %w", err)
 	}
-	var p []AccessPolicy
 
-	if err := yaml.Unmarshal(f, &p); err != nil {
+	if err := yaml.Unmarshal(f, &policies); err != nil {
 		return nil
 	}
-	return p
+	return err
 }
 
 /*
-EvaluateUrl takes a policy url and a request url and returns true if the request url matches the policy url.
+evaluateUrl takes a policy url and a request url and returns true if the request url matches the policy url.
 The request url is canonicalized before comparison.
 The policy url can contain wildcards.
 */
-func EvaluateUrl(policyUrl string, requestUrl string) bool {
+func evaluateUrl(policyUrl string, requestUrl string) bool {
 	c := canonicalizer.New(canonicalizer.WithDefaultScheme("http"))
 	reqUrl, err := c.Parse(requestUrl)
 	if err != nil {
@@ -84,9 +77,9 @@ func EvaluateUrl(policyUrl string, requestUrl string) bool {
 }
 
 /*
-GetRoleFromToken takes a token and returns the role of the user.
+getRoleFromToken takes a token and returns the role of the user.
 */
-func GetRoleFromToken(token string) string {
+func getRoleFromToken(token string) string {
 	switch token {
 	case "1":
 		return "admin"
