@@ -7,7 +7,7 @@ import (
 
 // TestCanAccess tests the CanAccess function
 func TestCanAccess(t *testing.T) {
-	err := Init("../testdata/policy_example.yaml")
+	err := SetPolicies("../testdata/policy_example.yaml")
 	if err != nil {
 		t.Fatalf("Failed to initialize policy: %v", err)
 	}

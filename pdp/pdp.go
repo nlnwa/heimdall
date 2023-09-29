@@ -42,9 +42,9 @@ func CanAccess(accRec AccessRequest) AccessResponse {
 }
 
 /*
-Init loads a list of policies from a yaml file.
+SetPolicies loads a list of policies from a yaml file.
 */
-func Init(policyFile string) error {
+func SetPolicies(policyFile string) error {
 	f, err := os.ReadFile(policyFile)
 	if err != nil {
 		return fmt.Errorf("error reading file: %w", err)

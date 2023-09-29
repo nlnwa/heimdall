@@ -30,7 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err := pdp.Init(*policyFile)
+	err := pdp.SetPolicies(*policyFile)
 	if err != nil {
 		fmt.Printf("Failed to initialize pdp: %v\n", err)
 		os.Exit(1)
