@@ -9,13 +9,19 @@ Policy decision point (PDP) for web playback.
 Start application with an example policy file:
 ```shell:
 go build 
-go run . -policy testdata/policy_example.yaml
+./heimdall -policy testdata/policy_example.yaml
 ```
+Or by running docker image:
+```shell:
+docker build -t heimdall .
+docker run --rm -it -p 8080:8080 -v $(pwd)/testdata/policy_example.yaml:/policy.yaml heimdall -policy /policy.yaml 
+``` 
+
 
 ### Swagger API documentation
 The documentation is generated from annotations in the code, using the [Declarative Comments Format](https://github.com/swaggo/swag#declarative-comments-format).
 
-To view the documentation, it first needs to be generated.
+It is included in the docker image, but to view it when building from source, the documentation needs to be generated.
 
 ```shell:
 go run github.com/swaggo/swag/cmd/swag init; go build
