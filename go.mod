@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/gobwas/glob v0.2.3
-	github.com/labstack/echo/v4 v4.11.1
+	github.com/labstack/echo/v4 v4.11.3
 	github.com/nlnwa/whatwg-url v0.4.0
 	github.com/swaggo/echo-swagger v1.4.1
 	github.com/swaggo/swag v1.16.2
