@@ -7,7 +7,7 @@ require (
 	github.com/labstack/echo/v4 v4.11.3
 	github.com/nlnwa/whatwg-url v0.4.0
 	github.com/swaggo/echo-swagger v1.4.1
-	github.com/swaggo/swag v1.16.2
+	github.com/swaggo/swag v1.16.3
 	gopkg.in/yaml.v3 v3.0.1
 )
 
